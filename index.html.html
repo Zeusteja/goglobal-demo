@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoGlobal Automation Hub — Built by Sai Teja</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1e;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent3: #8b5cf6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --text: #f0f4ff;
+    --muted: #94a3b8;
+    --faint: #334155;
+    --glow: rgba(59,130,246,0.15);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background grid */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image: 
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .container { max-width:1280px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    backdrop-filter: blur(12px);
+    position: sticky; top:0; z-index:100;
+    background: rgba(10,15,30,0.85);
+  }
+  .header-inner {
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo {
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo-icon {
+    width:32px; height:32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent3));
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+  }
+  .logo-text { font-size:15px; font-weight:600; letter-spacing:-.02em; }
+  .logo-sub { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; margin-top:1px; }
+  .header-badge {
+    display:flex; gap:8px; align-items:center;
+  }
+  .badge {
+    font-family:'DM Mono',monospace;
+    font-size:11px; padding:4px 10px;
+    border-radius:20px;
+    border:1px solid;
+  }
+  .badge-green { color:var(--success); border-color:rgba(16,185,129,.3); background:rgba(16,185,129,.08); }
+  .badge-blue  { color:var(--accent);  border-color:rgba(59,130,246,.3);  background:rgba(59,130,246,.08); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 72px 0 48px;
+    text-align:center;
+  }
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-family:'DM Mono',monospace;
+    color:var(--accent2); letter-spacing:.08em; text-transform:uppercase;
+    border:1px solid rgba(6,182,212,.25);
+    background:rgba(6,182,212,.06);
+    border-radius:20px; padding:5px 14px; margin-bottom:24px;
+  }
+  .hero h1 {
+    font-family:'DM Serif Display', serif;
+    font-size:clamp(36px,5vw,64px);
+    line-height:1.1; letter-spacing:-.02em;
+    margin-bottom:20px;
+  }
+  .hero h1 span { 
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero-sub {
+    color:var(--muted); font-size:18px; max-width:600px; margin:0 auto 36px;
+    line-height:1.7;
+  }
+  .hero-stats {
+    display:flex; gap:32px; justify-content:center; flex-wrap:wrap;
+    margin-top:36px;
+  }
+  .stat { text-align:center; }
+  .stat-number { font-family:'DM Serif Display',serif; font-size:32px; color:var(--text); }
+  .stat-label  { font-size:12px; color:var(--muted); margin-top:2px; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:24px; padding-bottom:12px;
+    border-bottom:1px solid var(--border);
+  }
+  .section-header h2 {
+    font-family:'DM Serif Display',serif;
+    font-size:22px; letter-spacing:-.01em;
+  }
+  .section-num {
+    font-family:'DM Mono',monospace;
+    font-size:11px; color:var(--muted);
+    border:1px solid var(--border2);
+    padding:3px 8px; border-radius:4px;
+  }
+
+  /* ── TABS ── */
+  .tab-row {
+    display:flex; gap:4px; flex-wrap:wrap;
+    margin-bottom:24px;
+    background: var(--surface); 
+    padding:4px; border-radius:10px;
+    border:1px solid var(--border);
+  }
+  .tab-btn {
+    flex:1; min-width:120px;
+    padding:9px 16px; border:none; background:none;
+    color:var(--muted); cursor:pointer;
+    border-radius:7px; font-size:13px;
+    font-family:'DM Sans',sans-serif; font-weight:500;
+    transition:all .2s; white-space:nowrap;
+  }
+  .tab-btn:hover { color:var(--text); background:var(--surface2); }
+  .tab-btn.active { background:var(--accent); color:#fff; }
+
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px;
+    position:relative; overflow:hidden;
+  }
+  .card::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0;
+    height:2px;
+  }
+  .card.accent-blue::before  { background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .card.accent-purple::before{ background:linear-gradient(90deg,var(--accent3),var(--accent)); }
+  .card.accent-green::before { background:linear-gradient(90deg,var(--success),var(--accent2)); }
+  .card.accent-amber::before { background:linear-gradient(90deg,var(--warning),#fb923c); }
+
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+  .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  @media(max-width:900px){ .grid-4{grid-template-columns:1fr 1fr;} .grid-3{grid-template-columns:1fr 1fr;} }
+  @media(max-width:600px){ .grid-2{grid-template-columns:1fr;} .grid-3{grid-template-columns:1fr;} .grid-4{grid-template-columns:1fr;} }
+
+  /* ── KPI CARDS ── */
+  .kpi {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px; padding:16px;
+  }
+  .kpi-label { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .kpi-value { font-family:'DM Serif Display',serif; font-size:28px; line-height:1; }
+  .kpi-delta { font-size:11px; margin-top:6px; }
+  .kpi-delta.up   { color:var(--success); }
+  .kpi-delta.down { color:var(--danger); }
+
+  /* ── PROCESS FLOW ── */
+  .flow {
+    display:flex; gap:0; align-items:stretch; flex-wrap:wrap;
+    margin:16px 0;
+  }
+  .flow-step {
+    flex:1; min-width:130px;
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:8px; padding:14px;
+    position:relative;
+    transition: border-color .2s, background .2s;
+  }
+  .flow-step:hover { border-color:var(--accent); background:rgba(59,130,246,.05); }
+  .flow-step + .flow-step::before {
+    content:'→';
+    position:absolute; left:-16px; top:50%; transform:translateY(-50%);
+    color:var(--faint); font-size:18px;
+  }
+  .flow-step-num { font-size:10px; font-family:'DM Mono',monospace; color:var(--muted); margin-bottom:6px; }
+  .flow-step-title { font-size:13px; font-weight:600; margin-bottom:4px; }
+  .flow-step-desc  { font-size:11px; color:var(--muted); line-height:1.5; }
+  .flow-step-icon  { font-size:18px; margin-bottom:6px; }
+  .flow-step.done  { border-color:rgba(16,185,129,.4); background:rgba(16,185,129,.04); }
+  .flow-step.active{ border-color:var(--accent); background:rgba(59,130,246,.07); }
+
+  /* ── TABLE ── */
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; padding:10px 14px; color:var(--muted); font-weight:500; font-size:11px; font-family:'DM Mono',monospace; letter-spacing:.04em; text-transform:uppercase; border-bottom:1px solid var(--border); }
+  td { padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:rgba(255,255,255,.02); }
+  .status-dot { display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:6px; }
+  .dot-green { background:var(--success); }
+  .dot-amber { background:var(--warning); }
+  .dot-blue  { background:var(--accent); }
+  .dot-red   { background:var(--danger); }
+
+  /* ── AI CHAT DEMO ── */
+  .chat-window {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px; overflow:hidden;
+  }
+  .chat-header {
+    padding:12px 16px;
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; font-weight:600;
+  }
+  .chat-dot { width:8px; height:8px; border-radius:50%; background:var(--success); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .chat-messages { padding:16px; min-height:240px; max-height:320px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; }
+  .msg { max-width:80%; padding:10px 14px; border-radius:10px; font-size:13px; line-height:1.6; }
+  .msg-user { background:var(--accent); color:#fff; align-self:flex-end; border-bottom-right-radius:3px; }
+  .msg-bot  { background:var(--surface2); color:var(--text); align-self:flex-start; border-bottom-left-radius:3px; border:1px solid var(--border); }
+  .msg-bot .msg-label { font-size:10px; color:var(--muted); font-family:'DM Mono',monospace; margin-bottom:4px; }
+  .chat-input-row {
+    padding:12px 16px; border-top:1px solid var(--border);
+    display:flex; gap:8px;
+  }
+  .chat-input {
+    flex:1; background:var(--surface2); border:1px solid var(--border);
+    color:var(--text); padding:9px 14px; border-radius:8px;
+    font-size:13px; font-family:'DM Sans',sans-serif;
+    outline:none; transition:border-color .2s;
+  }
+  .chat-input:focus { border-color:var(--accent); }
+  .btn {
+    background:var(--accent); color:#fff;
+    border:none; border-radius:8px; padding:9px 18px;
+    font-size:13px; font-weight:600; cursor:pointer;
+    font-family:'DM Sans',sans-serif;
+    transition:opacity .2s, transform .1s;
+  }
+  .btn:hover { opacity:.9; }
+  .btn:active { transform:scale(.97); }
+  .btn-sm { padding:6px 12px; font-size:12px; border-radius:6px; }
+  .btn-outline {
+    background:none; border:1px solid var(--border2); color:var(--text);
+    border-radius:8px; padding:9px 18px;
+    font-size:13px; font-weight:500; cursor:pointer;
+    font-family:'DM Sans',sans-serif; transition:all .2s;
+  }
+  .btn-outline:hover { border-color:var(--accent); color:var(--accent); }
+
+  /* ── PROGRESS BARS ── */
+  .progress-bar { background:var(--surface2); border-radius:4px; height:6px; overflow:hidden; margin-top:6px; }
+  .progress-fill { height:100%; border-radius:4px; transition:width 1s ease; }
+  .fill-blue   { background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+  .fill-purple { background:linear-gradient(90deg,var(--accent3),var(--accent)); }
+  .fill-green  { background:linear-gradient(90deg,var(--success),var(--accent2)); }
+  .fill-amber  { background:linear-gradient(90deg,var(--warning),#fb923c); }
+
+  /* ── TIMELINE ── */
+  .timeline { padding:0; }
+  .timeline-item {
+    display:flex; gap:16px; padding-bottom:24px;
+    position:relative;
+  }
+  .timeline-item::before {
+    content:'';
+    position:absolute; left:15px; top:32px; bottom:0;
+    width:1px; background:var(--border);
+  }
+  .timeline-item:last-child::before { display:none; }
+  .timeline-dot {
+    width:32px; height:32px; min-width:32px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; border:1px solid var(--border);
+    background:var(--surface2);
+  }
+  .timeline-dot.done   { background:rgba(16,185,129,.15); border-color:rgba(16,185,129,.4); }
+  .timeline-dot.active { background:rgba(59,130,246,.15);  border-color:var(--accent); animation:pulse 2s infinite; }
+  .timeline-content { flex:1; padding-top:5px; }
+  .timeline-title { font-size:14px; font-weight:600; margin-bottom:4px; }
+  .timeline-desc  { font-size:12px; color:var(--muted); line-height:1.5; }
+  .timeline-time  { font-size:11px; font-family:'DM Mono',monospace; color:var(--faint); margin-top:4px; }
+
+  /* ── COUNTRY MAP WIDGET ── */
+  .country-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; }
+  .country-item {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:8px; padding:10px 12px;
+    display:flex; flex-direction:column; gap:4px;
+    cursor:pointer; transition:all .2s;
+  }
+  .country-item:hover { border-color:var(--accent); background:rgba(59,130,246,.07); }
+  .country-name { font-size:12px; font-weight:600; }
+  .country-flag { font-size:18px; }
+  .country-status { font-size:10px; font-family:'DM Mono',monospace; }
+  .country-status.ok     { color:var(--success); }
+  .country-status.review { color:var(--warning); }
+  .country-status.alert  { color:var(--danger); }
+
+  /* ── METRIC SPARKLINE ── */
+  .sparkline { display:flex; align-items:flex-end; gap:2px; height:32px; }
+  .spark-bar { flex:1; background:var(--accent); border-radius:2px; opacity:.6; transition:opacity .2s; }
+  .spark-bar:hover { opacity:1; }
+
+  /* ── PILL TAGS ── */
+  .tag { display:inline-block; font-size:10px; padding:2px 8px; border-radius:10px; font-family:'DM Mono',monospace; font-weight:500; }
+  .tag-blue   { color:var(--accent);  background:rgba(59,130,246,.12); }
+  .tag-green  { color:var(--success); background:rgba(16,185,129,.12); }
+  .tag-amber  { color:var(--warning); background:rgba(245,158,11,.12); }
+  .tag-purple { color:#a78bfa;        background:rgba(139,92,246,.12); }
+  .tag-red    { color:var(--danger);  background:rgba(239,68,68,.12); }
+
+  /* ── AUTOMATION RULE BUILDER ── */
+  .rule-row {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:8px; padding:12px 16px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    font-size:13px; margin-bottom:8px;
+    transition: border-color .2s;
+  }
+  .rule-row:hover { border-color:var(--border2); }
+  .rule-toggle { width:36px; height:20px; background:var(--success); border-radius:10px; cursor:pointer; position:relative; }
+  .rule-toggle::after { content:''; position:absolute; top:2px; left:18px; width:16px; height:16px; background:#fff; border-radius:50%; transition:.2s; }
+  .rule-toggle.off { background:var(--faint); }
+  .rule-toggle.off::after { left:2px; }
+  .rule-label { flex:1; font-weight:500; min-width:160px; }
+  .rule-trigger { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; }
+
+  /* ── NOTIFICATION TOAST ── */
+  .toast-area {
+    position:fixed; bottom:24px; right:24px; z-index:999;
+    display:flex; flex-direction:column; gap:8px; pointer-events:none;
+  }
+  .toast {
+    background:var(--surface2); border:1px solid var(--border2);
+    border-radius:10px; padding:12px 16px; min-width:280px;
+    display:flex; align-items:flex-start; gap:10px;
+    animation:toastIn .3s ease;
+    pointer-events:all;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+  @keyframes toastIn { from{transform:translateX(20px);opacity:0} to{transform:translateX(0);opacity:1} }
+  .toast.out { animation:toastOut .3s ease forwards; }
+  @keyframes toastOut { to{transform:translateX(20px);opacity:0} }
+  .toast-icon { font-size:16px; margin-top:1px; }
+  .toast-body { flex:1; }
+  .toast-title { font-size:13px; font-weight:600; margin-bottom:2px; }
+  .toast-msg   { font-size:11px; color:var(--muted); line-height:1.4; }
+  .toast-close { color:var(--muted); cursor:pointer; font-size:16px; background:none; border:none; padding:0; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--faint); border-radius:2px; }
+
+  select, input[type=text] {
+    background:var(--surface2); border:1px solid var(--border);
+    color:var(--text); font-family:'DM Sans',sans-serif;
+    border-radius:6px; padding:7px 10px; font-size:13px; outline:none;
+    transition:border-color .2s;
+  }
+  select:focus, input[type=text]:focus { border-color:var(--accent); }
+  select option { background:var(--surface2); }
+
+  hr { border:none; border-top:1px solid var(--border); margin:20px 0; }
+
+  .section { margin-bottom:40px; }
+  .flex-between { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .flex-gap { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  p.muted { color:var(--muted); font-size:13px; line-height:1.6; }
+  .mt8  { margin-top:8px; }
+  .mt16 { margin-top:16px; }
+  .mt24 { margin-top:24px; }
+  .mb8  { margin-bottom:8px; }
+  .highlight { color:var(--accent2); font-family:'DM Mono',monospace; font-size:12px; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon">🌐</div>
+        <div>
+          <div class="logo-text">GoGlobal Automation Hub</div>
+          <div class="logo-sub">Built by Sai Teja · AI & Automation Engineer</div>
+        </div>
+      </div>
+      <div class="header-badge">
+        <div class="badge badge-green">● LIVE</div>
+        <div class="badge badge-blue">145 Countries</div>
+        <button class="btn btn-sm" onclick="triggerToast('🤖','Automation triggered!','Running payroll anomaly scan across 12 active countries...')">Run Automation</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">⚡ End-to-End AI Automation · GoGlobal-Specific</div>
+    <h1>Automate Global Ops<br><span>From Hire to Payroll</span></h1>
+    <p class="hero-sub">A unified AI-powered automation system built specifically for GoGlobal's cross-border HR, payroll, compliance, sales, and internal operations — across 145+ countries.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-number">87%</div><div class="stat-label">Manual work eliminated</div></div>
+      <div class="stat"><div class="stat-number">4.2h</div><div class="stat-label">Avg onboarding time saved</div></div>
+      <div class="stat"><div class="stat-number">$0</div><div class="stat-label">Compliance violations</div></div>
+      <div class="stat"><div class="stat-number">145</div><div class="stat-label">Countries covered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="container" style="padding-bottom:60px;">
+
+  <!-- TABS -->
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
+    <button class="tab-btn" onclick="switchTab('onboarding')">👤 HR Onboarding</button>
+    <button class="tab-btn" onclick="switchTab('payroll')">💰 Payroll AI</button>
+    <button class="tab-btn" onclick="switchTab('compliance')">⚖️ Compliance</button>
+    <button class="tab-btn" onclick="switchTab('sales')">📈 Sales</button>
+    <button class="tab-btn" onclick="switchTab('rules')">⚙️ Rules Engine</button>
+  </div>
+
+  <!-- ===== TAB: DASHBOARD ===== -->
+  <div id="tab-dashboard" class="tab-panel active">
+
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Global Operations Overview</h2>
+        <span class="highlight">real-time</span>
+      </div>
+
+      <div class="grid-4 mb8">
+        <div class="kpi">
+          <div class="kpi-label">Active Employees</div>
+          <div class="kpi-value" id="kpi-emp">2,847</div>
+          <div class="kpi-delta up">↑ +34 this week</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Payroll Processed</div>
+          <div class="kpi-value">$4.2M</div>
+          <div class="kpi-delta up">↑ On schedule</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Compliance Score</div>
+          <div class="kpi-value" id="kpi-comp">98.6%</div>
+          <div class="kpi-delta up">↑ 2.1% vs last month</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Automation Rate</div>
+          <div class="kpi-value">87%</div>
+          <div class="kpi-delta up">↑ Saving 340 hrs/mo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2 section">
+      <!-- Activity Feed -->
+      <div class="card accent-blue">
+        <div class="flex-between mb8">
+          <strong style="font-size:14px;">Live Automation Events</strong>
+          <span class="badge badge-green">● streaming</span>
+        </div>
+        <div id="activity-feed" style="display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto;">
+          <div class="timeline-item">
+            <div class="timeline-dot done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-title">Payroll anomaly resolved — Singapore</div>
+              <div class="timeline-desc">AI detected CPF contribution mismatch. Auto-corrected and notified account manager.</div>
+              <div class="timeline-time">2 min ago · Payroll AI</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-title">New client onboarding started — Brazil</div>
+              <div class="timeline-desc">Contract intake form submitted. Entity setup checklist auto-generated for São Paulo.</div>
+              <div class="timeline-time">8 min ago · Client Intake</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot active">⟳</div>
+            <div class="timeline-content">
+              <div class="timeline-title">Employee contracts being generated — Japan</div>
+              <div class="timeline-desc">3 new hires. AI generating bilingual contracts with commute pass clauses.</div>
+              <div class="timeline-time">Running now · HR Automation</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-title">Compliance alert — UAE labour law update</div>
+              <div class="timeline-desc">New end-of-service gratuity rule detected. Affected employee records auto-flagged.</div>
+              <div class="timeline-time">1 hr ago · Compliance Bot</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-outline mt16" style="width:100%;font-size:12px;" onclick="addEvent()">+ Simulate new event</button>
+      </div>
+
+      <!-- Module Health -->
+      <div class="card accent-purple">
+        <strong style="font-size:14px;">Module Performance</strong>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px;">
+          <div>
+            <div class="flex-between"><span style="font-size:13px;">HR Onboarding Automation</span><span class="tag tag-green">94%</span></div>
+            <div class="progress-bar mt8"><div class="progress-fill fill-green" style="width:94%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between"><span style="font-size:13px;">Payroll Intelligence AI</span><span class="tag tag-blue">91%</span></div>
+            <div class="progress-bar mt8"><div class="progress-fill fill-blue" style="width:91%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between"><span style="font-size:13px;">Compliance Rules Engine</span><span class="tag tag-purple">98%</span></div>
+            <div class="progress-bar mt8"><div class="progress-fill fill-purple" style="width:98%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between"><span style="font-size:13px;">Sales Outreach AI</span><span class="tag tag-amber">78%</span></div>
+            <div class="progress-bar mt8"><div class="progress-fill fill-amber" style="width:78%"></div></div>
+          </div>
+          <div>
+            <div class="flex-between"><span style="font-size:13px;">Client Intake Pipeline</span><span class="tag tag-green">88%</span></div>
+            <div class="progress-bar mt8"><div class="progress-fill fill-green" style="width:88%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Country Status Table -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Country Operations Status</h2>
+      </div>
+      <div class="card accent-green">
+        <table>
+          <thead>
+            <tr><th>Country</th><th>Payroll Status</th><th>Compliance</th><th>Active EEs</th><th>Automation</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>🇸🇬 Singapore</strong></td><td><span class="status-dot dot-green"></span>On time</td><td><span class="tag tag-green">100%</span></td><td>142</td><td>CPF, SDL auto-calc</td><td><button class="btn btn-sm" onclick="triggerToast('🇸🇬','Singapore Payroll','All 142 employees processed. CPF correctly calculated.')">View</button></td></tr>
+            <tr><td><strong>🇯🇵 Japan</strong></td><td><span class="status-dot dot-blue"></span>Processing</td><td><span class="tag tag-green">99%</span></td><td>89</td><td>Commute pass + bonus</td><td><button class="btn btn-sm" onclick="triggerToast('🇯🇵','Japan Payroll','3 new contracts pending. Commute pass auto-calculated.')">View</button></td></tr>
+            <tr><td><strong>🇧🇷 Brazil</strong></td><td><span class="status-dot dot-amber"></span>Review</td><td><span class="tag tag-amber">94%</span></td><td>67</td><td>FGTS, INSS checks</td><td><button class="btn btn-sm" onclick="triggerToast('⚠️','Brazil Review','2 FGTS contribution exceptions flagged for review.')">View</button></td></tr>
+            <tr><td><strong>🇦🇪 UAE</strong></td><td><span class="status-dot dot-green"></span>On time</td><td><span class="tag tag-amber">91%</span></td><td>53</td><td>Gratuity law update</td><td><button class="btn btn-sm" onclick="triggerToast('🇦🇪','UAE Alert','New gratuity rule active. 12 contracts auto-updated.')">View</button></td></tr>
+            <tr><td><strong>🇩🇪 Germany</strong></td><td><span class="status-dot dot-green"></span>On time</td><td><span class="tag tag-green">100%</span></td><td>214</td><td>Social insurance split</td><td><button class="btn btn-sm" onclick="triggerToast('🇩🇪','Germany Payroll','214 employees. All Sozialversicherung contributions verified.')">View</button></td></tr>
+            <tr><td><strong>🇮🇳 India</strong></td><td><span class="status-dot dot-green"></span>On time</td><td><span class="tag tag-green">98%</span></td><td>318</td><td>PF, ESI, TDS auto-filed</td><td><button class="btn btn-sm" onclick="triggerToast('🇮🇳','India Payroll','318 employees. PF & ESI auto-filed. TDS calculated.')">View</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: HR ONBOARDING ===== -->
+  <div id="tab-onboarding" class="tab-panel">
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Automated Employee Onboarding</h2>
+        <span class="highlight">powered by AI</span>
+      </div>
+      <p class="muted mb8">When GoGlobal wins a new client, this pipeline automatically triggers: contract generation, compliance checks, payroll setup, and account manager assignment — all without manual intervention.</p>
+    </div>
+
+    <div class="card accent-blue section">
+      <strong style="font-size:14px;">Onboarding Flow — New Employee in Japan 🇯🇵</strong>
+      <div class="flow mt16" style="gap:8px;">
+        <div class="flow-step done">
+          <div class="flow-step-icon">📥</div>
+          <div class="flow-step-num">STEP 01</div>
+          <div class="flow-step-title">Intake Form</div>
+          <div class="flow-step-desc">Client submits new hire details via automated form</div>
+        </div>
+        <div class="flow-step done">
+          <div class="flow-step-icon">🔍</div>
+          <div class="flow-step-num">STEP 02</div>
+          <div class="flow-step-title">Compliance Check</div>
+          <div class="flow-step-desc">AI validates Japan-specific rules: work visa, commute pass eligibility</div>
+        </div>
+        <div class="flow-step active">
+          <div class="flow-step-icon">📄</div>
+          <div class="flow-step-num">STEP 03</div>
+          <div class="flow-step-title">Contract Gen</div>
+          <div class="flow-step-desc">Bilingual Japanese-English contract auto-generated with local clauses</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-icon">💰</div>
+          <div class="flow-step-num">STEP 04</div>
+          <div class="flow-step-title">Payroll Setup</div>
+          <div class="flow-step-desc">BlueOcean integration: employee added, payroll codes configured</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-icon">📧</div>
+          <div class="flow-step-num">STEP 05</div>
+          <div class="flow-step-title">Welcome Email</div>
+          <div class="flow-step-desc">Personalized onboarding email sent to employee & client</div>
+        </div>
+      </div>
+      <div class="flex-gap mt16">
+        <span class="tag tag-green">✓ Steps 1-2 complete</span>
+        <span class="tag tag-blue">⟳ Step 3 in progress</span>
+        <span class="tag tag-amber">Steps 4-5 queued</span>
+        <button class="btn btn-sm" onclick="triggerToast('⚡','Simulation run!','Contract generated in 2.3s. Sending to DocuSign...')">Simulate Next Step</button>
+      </div>
+    </div>
+
+    <!-- Onboarding Queue -->
+    <div class="card accent-purple">
+      <div class="flex-between mb8">
+        <strong style="font-size:14px;">Onboarding Queue — Live</strong>
+        <span class="badge badge-blue">6 active</span>
+      </div>
+      <table>
+        <thead><tr><th>Employee</th><th>Country</th><th>Stage</th><th>SLA</th><th>Auto-Actions Taken</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Kenji Tanaka</strong></td><td>🇯🇵 Japan</td><td><span class="tag tag-blue">Contract gen</span></td><td style="color:var(--success)">On track</td><td>Visa check ✓, commute pass ✓</td></tr>
+          <tr><td><strong>Ana Lima</strong></td><td>🇧🇷 Brazil</td><td><span class="tag tag-green">Complete</span></td><td style="color:var(--success)">On track</td><td>CLT contract ✓, FGTS setup ✓</td></tr>
+          <tr><td><strong>Priya Sharma</strong></td><td>🇮🇳 India</td><td><span class="tag tag-amber">Docs pending</span></td><td style="color:var(--warning)">1 day left</td><td>PF form ✓, ESI setup ✓</td></tr>
+          <tr><td><strong>Lars Hansen</strong></td><td>🇩🇪 Germany</td><td><span class="tag tag-blue">Payroll setup</span></td><td style="color:var(--success)">On track</td><td>Social insurance split ✓</td></tr>
+          <tr><td><strong>Fatima Al Zahra</strong></td><td>🇦🇪 UAE</td><td><span class="tag tag-green">Complete</span></td><td style="color:var(--success)">On track</td><td>Gratuity calc ✓, WPS setup ✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== TAB: PAYROLL AI ===== -->
+  <div id="tab-payroll" class="tab-panel">
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Payroll Intelligence Engine</h2>
+        <span class="highlight">anomaly detection + auto-correction</span>
+      </div>
+      <p class="muted mb8">The AI continuously monitors all payroll runs across all countries, catching discrepancies before they become compliance issues — and correcting them automatically where safe to do so.</p>
+    </div>
+
+    <!-- AI Chat for Payroll -->
+    <div class="grid-2 section">
+      <div>
+        <div class="card accent-amber mb8" style="margin-bottom:16px;">
+          <strong style="font-size:14px;">Anomaly Detection — This Month</strong>
+          <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px;">
+            <div class="rule-row">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--success);"></div>
+              <div class="rule-label">Singapore CPF over-contribution</div>
+              <span class="tag tag-green">Auto-fixed</span>
+              <span class="rule-trigger">$240 saved</span>
+            </div>
+            <div class="rule-row">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--success);"></div>
+              <div class="rule-label">Brazil INSS rate mismatch</div>
+              <span class="tag tag-green">Auto-fixed</span>
+              <span class="rule-trigger">$1,840 saved</span>
+            </div>
+            <div class="rule-row">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--warning);"></div>
+              <div class="rule-label">UAE gratuity calc discrepancy</div>
+              <span class="tag tag-amber">Needs review</span>
+              <span class="rule-trigger">$3,200 at risk</span>
+            </div>
+            <div class="rule-row">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--success);"></div>
+              <div class="rule-label">Germany pension contribution drift</div>
+              <span class="tag tag-green">Auto-fixed</span>
+              <span class="rule-trigger">$890 saved</span>
+            </div>
+          </div>
+          <div class="flex-between mt16">
+            <span style="font-size:13px;color:var(--muted);">Total savings this month</span>
+            <span style="font-size:20px;font-family:'DM Serif Display',serif;color:var(--success);">$6,170</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payroll AI Assistant -->
+      <div>
+        <div class="chat-window">
+          <div class="chat-header">
+            <div class="chat-dot"></div>
+            <strong>Payroll AI Assistant</strong>
+            <span class="tag tag-purple" style="margin-left:auto;">GPT-4 powered</span>
+          </div>
+          <div class="chat-messages" id="payroll-chat">
+            <div class="msg msg-bot">
+              <div class="msg-label">PAYROLL AI</div>
+              Hi! I can answer questions about payroll rules, run compliance checks, and explain calculations for any of our 145 countries. What do you need?
+            </div>
+            <div class="msg msg-user">What's the CPF contribution rate for Singapore employees earning $8,000/month?</div>
+            <div class="msg msg-bot">
+              <div class="msg-label">PAYROLL AI</div>
+              For a Singapore employee aged under 55 earning SGD $8,000/month:<br><br>
+              • <strong>Employee contribution:</strong> 20% = SGD $1,600<br>
+              • <strong>Employer contribution:</strong> 17% = SGD $1,360<br>
+              • <strong>Total CPF:</strong> SGD $2,960/month<br><br>
+              Ordinary Account: 23%, Special: 6%, Medisave: 8% (employee split). All auto-calculated in BlueOcean. ✓
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" class="chat-input" id="payroll-input" placeholder="Ask about any country's payroll rules..." onkeydown="if(event.key==='Enter')sendPayrollMsg()">
+            <button class="btn" onclick="sendPayrollMsg()">Ask</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: COMPLIANCE ===== -->
+  <div id="tab-compliance" class="tab-panel">
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Country Compliance Bot</h2>
+        <span class="highlight">145+ countries · auto-updated</span>
+      </div>
+      <p class="muted mb8">The compliance bot monitors regulatory changes in all countries GoGlobal operates in, automatically flags affected clients, and suggests remediation actions.</p>
+    </div>
+
+    <div class="section">
+      <div class="flex-between mb8">
+        <strong style="font-size:14px;">Compliance Alerts — Active</strong>
+        <select onchange="filterCompliance(this.value)">
+          <option value="all">All regions</option>
+          <option value="apac">APAC</option>
+          <option value="emea">EMEA</option>
+          <option value="americas">Americas</option>
+        </select>
+      </div>
+      <div class="card accent-amber" id="compliance-table">
+        <table>
+          <thead><tr><th>Country</th><th>Regulation Change</th><th>Effective Date</th><th>Impact</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>🇦🇪 UAE</td><td>End-of-service gratuity — new formula</td><td>Jan 2026</td><td><span class="tag tag-amber">18 employees</span></td><td><span class="tag tag-green">Auto-updated</span></td></tr>
+            <tr><td>🇸🇬 Singapore</td><td>CPF contribution ceiling increase</td><td>Sep 2025</td><td><span class="tag tag-amber">34 employees</span></td><td><span class="tag tag-green">Auto-updated</span></td></tr>
+            <tr><td>🇧🇷 Brazil</td><td>FGTS digital integration mandate</td><td>Mar 2026</td><td><span class="tag tag-red">67 employees</span></td><td><span class="tag tag-amber">In review</span></td></tr>
+            <tr><td>🇩🇪 Germany</td><td>Minimum wage increase €12.82/hr</td><td>Jan 2026</td><td><span class="tag tag-amber">12 employees</span></td><td><span class="tag tag-green">Auto-updated</span></td></tr>
+            <tr><td>🇯🇵 Japan</td><td>Social insurance reform — SME relief</td><td>Oct 2026</td><td><span class="tag tag-blue">Preview</span></td><td><span class="tag tag-blue">Monitoring</span></td></tr>
+            <tr><td>🇮🇳 India</td><td>New Labour Code — Phase 3 rollout</td><td>Apr 2026</td><td><span class="tag tag-red">318 employees</span></td><td><span class="tag tag-amber">Preparing</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card accent-green">
+      <strong style="font-size:14px;">Country Compliance Health</strong>
+      <div class="country-grid mt16">
+        <div class="country-item" onclick="triggerToast('🇸🇬','Singapore','Compliance: 100%. All statutory contributions current.')">
+          <div class="country-flag">🇸🇬</div>
+          <div class="country-name">Singapore</div>
+          <div class="country-status ok">✓ 100% compliant</div>
+        </div>
+        <div class="country-item" onclick="triggerToast('🇯🇵','Japan','Compliance: 99%. Minor commute pass review in progress.')">
+          <div class="country-flag">🇯🇵</div>
+          <div class="country-name">Japan</div>
+          <div class="country-status ok">✓ 99% compliant</div>
+        </div>
+        <div class="country-item" onclick="triggerToast('🇧🇷','Brazil','Compliance: 94%. FGTS digital integration pending.')">
+          <div class="country-flag">🇧🇷</div>
+          <div class="country-name">Brazil</div>
+          <div class="country-status review">⚠ 94% — review</div>
+        </div>
+        <div class="country-item" onclick="triggerToast('🇩🇪','Germany','Compliance: 100%. Minimum wage updated automatically.')">
+          <div class="country-flag">🇩🇪</div>
+          <div class="country-name">Germany</div>
+          <div class="country-status ok">✓ 100% compliant</div>
+        </div>
+        <div class="country-item" onclick="triggerToast('🇦🇪','UAE','Compliance: 91%. Gratuity formula update in progress.')">
+          <div class="country-flag">🇦🇪</div>
+          <div class="country-name">UAE</div>
+          <div class="country-status review">⚠ 91% — updating</div>
+        </div>
+        <div class="country-item" onclick="triggerToast('🇮🇳','India','Compliance: 98%. Labour Code Phase 3 monitoring active.')">
+          <div class="country-flag">🇮🇳</div>
+          <div class="country-name">India</div>
+          <div class="country-status ok">✓ 98% compliant</div>
+        </div>
+        <div class="country-item" onclick="triggerToast('🇬🇧','UK','Compliance: 100%. IR35 checks automated.')">
+          <div class="country-flag">🇬🇧</div>
+          <div class="country-name">UK</div>
+          <div class="country-status ok">✓ 100% compliant</div>
+        </div>
+        <div class="country-item" onclick="triggerToast('🇿🇦','South Africa','Compliance: 96%. UIF filing automated.')">
+          <div class="country-flag">🇿🇦</div>
+          <div class="country-name">South Africa</div>
+          <div class="country-status ok">✓ 96% compliant</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: SALES ===== -->
+  <div id="tab-sales" class="tab-panel">
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2>Sales & Client Intake Automation</h2>
+        <span class="highlight">AI-powered outreach</span>
+      </div>
+      <p class="muted mb8">Automates GoGlobal's entire sales pipeline: from prospect enrichment and AI-personalized outreach, to contract intake and CRM updates — so the sales team can focus on closing, not admin.</p>
+    </div>
+
+    <div class="grid-2 section">
+      <div class="card accent-blue">
+        <strong style="font-size:14px;">AI Email Sequence Builder</strong>
+        <div style="margin-top:16px;">
+          <div style="margin-bottom:12px;">
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px;">Target persona</label>
+            <select style="width:100%;" id="persona-select" onchange="updateEmailPreview()">
+              <option>HR Director — SaaS company expanding to APAC</option>
+              <option>CFO — Mid-market company entering Europe</option>
+              <option>VP People — Startup hiring globally for first time</option>
+              <option>COO — PE-backed firm scaling to 10 new markets</option>
+            </select>
+          </div>
+          <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:8px;">
+            <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--muted);margin-bottom:8px;">GENERATED EMAIL — SEQUENCE 1 of 3</div>
+            <div id="email-preview" style="font-size:13px;line-height:1.7;color:var(--text);">
+              <strong>Subject:</strong> Expanding to APAC? Here's how [Company] can be live in 30 days<br><br>
+              Hi [First Name],<br><br>
+              I noticed [Company] is showing strong signals of expansion into Singapore and Japan. GoGlobal has onboarded 340+ employees across APAC this year alone — with <strong>zero compliance violations</strong>.<br><br>
+              Most HR teams lose 4+ weeks to payroll setup alone. We automate that to under 3 days.<br><br>
+              Worth a 20-minute call this week?<br><br>
+              <em>— GoGlobal APAC Team</em>
+            </div>
+          </div>
+          <button class="btn mt16" style="width:100%;" onclick="triggerToast('📧','Email sequence launched!','3-touch AI sequence queued for 12 prospects.')">Launch Sequence</button>
+        </div>
+      </div>
+
+      <div class="card accent-green">
+        <strong style="font-size:14px;">Pipeline Intelligence</strong>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);">
+            <div>
+              <div style="font-size:13px;font-weight:600;">Acme Corp</div>
+              <div style="font-size:11px;color:var(--muted);">Expanding → Singapore, Malaysia</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tag tag-green">High intent</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">Score: 87/100</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);">
+            <div>
+              <div style="font-size:13px;font-weight:600;">NovaTech GmbH</div>
+              <div style="font-size:11px;color:var(--muted);">Expanding → UAE, Saudi Arabia</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tag tag-amber">Medium intent</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">Score: 62/100</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);">
+            <div>
+              <div style="font-size:13px;font-weight:600;">Brightmind Inc</div>
+              <div style="font-size:11px;color:var(--muted);">Expanding → Germany, France</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tag tag-green">High intent</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">Score: 91/100</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt16">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">Pipeline value this month</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--success);">$2.4M</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: RULES ENGINE ===== -->
+  <div id="tab-rules" class="tab-panel">
+    <div class="section">
+      <div class="section-header">
+        <span class="section-num">06</span>
+        <h2>Automation Rules Engine</h2>
+        <span class="highlight">no-code · customizable</span>
+      </div>
+      <p class="muted mb8">Configure exactly what gets automated and when. Each rule is an "if this, then that" trigger — built on GoGlobal's operational playbooks, now running autonomously 24/7.</p>
+    </div>
+
+    <div class="card accent-purple">
+      <div class="flex-between mb8">
+        <strong style="font-size:14px;">Active Automation Rules</strong>
+        <button class="btn btn-sm" onclick="triggerToast('✅','Rule saved!','New automation rule is now active.')">+ Add Rule</button>
+      </div>
+
+      <div id="rules-list">
+        <div class="rule-row">
+          <div class="rule-toggle" onclick="toggleRule(this)"></div>
+          <div class="rule-label">Auto-generate employment contracts on new hire submission</div>
+          <span class="tag tag-green">Running</span>
+          <span class="rule-trigger">Trigger: Form submit</span>
+        </div>
+        <div class="rule-row">
+          <div class="rule-toggle" onclick="toggleRule(this)"></div>
+          <div class="rule-label">Alert account manager if payroll not submitted 3 days before deadline</div>
+          <span class="tag tag-amber">Warning</span>
+          <span class="rule-trigger">Trigger: Date-based</span>
+        </div>
+        <div class="rule-row">
+          <div class="rule-toggle" onclick="toggleRule(this)"></div>
+          <div class="rule-label">Run compliance scan whenever a new country regulation is detected</div>
+          <span class="tag tag-green">Running</span>
+          <span class="rule-trigger">Trigger: Regulation update</span>
+        </div>
+        <div class="rule-row">
+          <div class="rule-toggle" onclick="toggleRule(this)"></div>
+          <div class="rule-label">Score and route inbound leads to the correct regional sales team</div>
+          <span class="tag tag-green">Running</span>
+          <span class="rule-trigger">Trigger: CRM entry</span>
+        </div>
+        <div class="rule-row">
+          <div class="rule-toggle off" onclick="toggleRule(this)"></div>
+          <div class="rule-label">Auto-send client expansion report every Monday at 09:00 UTC</div>
+          <span class="tag tag-amber">Paused</span>
+          <span class="rule-trigger">Trigger: Schedule</span>
+        </div>
+        <div class="rule-row">
+          <div class="rule-toggle" onclick="toggleRule(this)"></div>
+          <div class="rule-label">Flag payroll anomalies &gt;2% variance for immediate review</div>
+          <span class="tag tag-green">Running</span>
+          <span class="rule-trigger">Trigger: Payroll run</span>
+        </div>
+        <div class="rule-row">
+          <div class="rule-toggle" onclick="toggleRule(this)"></div>
+          <div class="rule-label">Create Slack notification when employee contract is signed</div>
+          <span class="tag tag-green">Running</span>
+          <span class="rule-trigger">Trigger: DocuSign event</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card accent-blue mt24">
+      <strong style="font-size:14px;">Tech Stack — What Powers This</strong>
+      <div class="grid-3 mt16">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">ORCHESTRATION</div>
+          <div style="font-size:13px;font-weight:600;">n8n / Make.com</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Visual workflow automation</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">AI LAYER</div>
+          <div style="font-size:13px;font-weight:600;">OpenAI GPT-4 + Claude</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Document gen, compliance Q&A</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">INTEGRATIONS</div>
+          <div style="font-size:13px;font-weight:600;">BlueOcean API</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">GoGlobal native payroll platform</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">DOCS & CONTRACTS</div>
+          <div style="font-size:13px;font-weight:600;">DocuSign + Python</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Auto-generate, send & track</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">ALERTS</div>
+          <div style="font-size:13px;font-weight:600;">Slack + Email</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Real-time operational alerts</div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">DATA & ANALYTICS</div>
+          <div style="font-size:13px;font-weight:600;">PostgreSQL + Metabase</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">KPIs, dashboards, reports</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Toast Area -->
+<div class="toast-area" id="toast-area"></div>
+
+<script>
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Toast notifications
+function triggerToast(icon, title, msg) {
+  const area = document.getElementById('toast-area');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<div class="toast-icon">${icon}</div>
+    <div class="toast-body">
+      <div class="toast-title">${title}</div>
+      <div class="toast-msg">${msg}</div>
+    </div>
+    <button class="toast-close" onclick="closeToast(this.parentElement)">×</button>`;
+  area.appendChild(t);
+  setTimeout(() => closeToast(t), 5000);
+}
+function closeToast(t) {
+  t.classList.add('out');
+  setTimeout(() => t.remove(), 300);
+}
+
+// Toggle rule
+function toggleRule(el) {
+  el.classList.toggle('off');
+  const row = el.closest('.rule-row');
+  const tag = row.querySelector('.tag');
+  if(el.classList.contains('off')) {
+    tag.textContent = 'Paused';
+    tag.className = 'tag tag-amber';
+  } else {
+    tag.textContent = 'Running';
+    tag.className = 'tag tag-green';
+  }
+}
+
+// Add event to feed
+const events = [
+  ['✓','Payroll export sent — Germany','All 214 employees. DATEV-compatible file dispatched.','Just now · Payroll AI'],
+  ['✓','Contract signed — Priya Sharma','India. Employment agreement countersigned. Payroll activated.','Just now · DocuSign'],
+  ['⚑','Compliance update — Netherlands','New holiday pay formula effective Q2 2026. 8 clients affected.','Just now · Compliance Bot'],
+  ['✓','Lead scored — Acme Corp','Intent score 87/100. Routed to APAC sales team.','Just now · Sales AI'],
+];
+let eventIdx = 0;
+function addEvent() {
+  const feed = document.getElementById('activity-feed');
+  const e = events[eventIdx % events.length]; eventIdx++;
+  const item = document.createElement('div');
+  item.className = 'timeline-item';
+  item.style.cssText = 'animation:toastIn .3s ease';
+  item.innerHTML = `<div class="timeline-dot done">${e[0]}</div>
+    <div class="timeline-content">
+      <div class="timeline-title">${e[1]}</div>
+      <div class="timeline-desc">${e[2]}</div>
+      <div class="timeline-time">${e[3]}</div>
+    </div>`;
+  feed.prepend(item);
+  triggerToast(e[0], e[1], e[2]);
+}
+
+// Payroll chat
+const payrollResponses = {
+  'japan': 'In Japan, social insurance contributions are: Health insurance ~10%, Pension ~18.3%, Employment insurance ~1.55% (split employer/employee). Plus commute pass (commuter allowance) is mandatory and tax-exempt up to ¥150,000/month. All auto-calculated in BlueOcean. ✓',
+  'brazil': 'Brazil payroll includes: INSS (Social Security) 7.5-14% employee, FGTS 8% employer, Income tax (IRRF) progressive 0-27.5%. 13th salary and vacation bonus are mandatory. Digital FGTS integration deadline: Mar 2026. We handle all of this automatically.',
+  'india': 'India statutory deductions: PF 12% employee + 12% employer, ESI 0.75% employee + 3.25% employer (if salary < ₹21k), Professional Tax varies by state, TDS based on declaration. New Labour Code Phase 3 monitoring active for your account.',
+  'germany': 'Germany: Income tax (Lohnsteuer) progressive, Social contributions ~20.5% each (pension, health, unemployment, long-term care). Minimum wage now €12.82/hr. Kirchensteuer if applicable. All Sozialversicherung auto-split. ✓',
+  'uae': 'UAE: No income tax. End-of-service gratuity = 21 days salary per year for first 5 years, then 30 days/year. WPS (Wage Protection System) mandatory. New gratuity formula update in progress for Jan 2026. ✓',
+};
+function sendPayrollMsg() {
+  const input = document.getElementById('payroll-input');
+  const msg = input.value.trim(); if(!msg) return;
+  const chat = document.getElementById('payroll-chat');
+  
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg msg-user';
+  userMsg.textContent = msg;
+  chat.appendChild(userMsg);
+  
+  const botMsg = document.createElement('div');
+  botMsg.className = 'msg msg-bot';
+  const lower = msg.toLowerCase();
+  let resp = 'Great question! I\'m looking that up across our compliance database for all 145 countries. For specific calculations, I\'ll cross-reference the latest statutory rates. Could you specify the country and employee salary level for a precise answer?';
+  for(const [key, val] of Object.entries(payrollResponses)) {
+    if(lower.includes(key)) { resp = val; break; }
+  }
+  botMsg.innerHTML = `<div class="msg-label">PAYROLL AI</div>${resp}`;
+  chat.appendChild(botMsg);
+  chat.scrollTop = chat.scrollHeight;
+  input.value = '';
+}
+
+// Email preview update
+function updateEmailPreview() {
+  const sel = document.getElementById('persona-select').value;
+  const previews = {
+    'HR Director — SaaS company expanding to APAC': '<strong>Subject:</strong> Expanding to APAC? Here\'s how [Company] can be live in 30 days<br><br>Hi [First Name],<br><br>I noticed [Company] is showing strong signals of expansion into Singapore and Japan. GoGlobal has onboarded 340+ employees across APAC this year alone — with <strong>zero compliance violations</strong>.<br><br>Most HR teams lose 4+ weeks to payroll setup alone. We automate that to under 3 days.<br><br>Worth a 20-minute call this week?<br><br><em>— GoGlobal APAC Team</em>',
+    'CFO — Mid-market company entering Europe': '<strong>Subject:</strong> The hidden cost of European payroll — and how to eliminate it<br><br>Hi [First Name],<br><br>European expansion carries an often-overlooked cost: payroll compliance risk. Germany, France, and the Netherlands each have unique social contribution rules that change annually.<br><br>GoGlobal\'s automation layer handles this end-to-end — with a 98.6% compliance score across 214 German employees alone.<br><br>I\'d love to show you a 10-minute demo of our CFO dashboard.<br><br><em>— GoGlobal Europe Team</em>',
+    'VP People — Startup hiring globally for first time': '<strong>Subject:</strong> Hired someone in 3 countries this month? Here\'s what you\'re missing<br><br>Hi [First Name],<br><br>Congrats on the global hiring momentum! At this stage, most People teams hit the same wall: payroll compliance across jurisdictions.<br><br>GoGlobal automates contracts, payroll, and compliance for 145+ countries. Your first global hire can be live in 72 hours.<br><br>Can I send you our startup onboarding guide?<br><br><em>— GoGlobal People Team</em>',
+    'COO — PE-backed firm scaling to 10 new markets': '<strong>Subject:</strong> Scaling to 10 markets in 12 months — a playbook<br><br>Hi [First Name],<br><br>PE-backed expansion moves fast. The operational bottleneck is always entity setup, payroll, and compliance — country by country.<br><br>GoGlobal has helped 50+ PE-backed firms hit their expansion timelines with our automation-first approach. Average time to first payroll: 8 days per market.<br><br>Worth a strategic conversation?<br><br><em>— GoGlobal Operations Team</em>',
+  };
+  document.getElementById('email-preview').innerHTML = previews[sel] || previews['HR Director — SaaS company expanding to APAC'];
+}
+
+// Auto-trigger a welcome toast
+setTimeout(() => triggerToast('🚀','Welcome, Sai Teja!','GoGlobal Automation Hub is live. All 6 modules operational across 145 countries.'), 1000);
+
+// Animate KPIs
+let empCount = 2800;
+setInterval(() => {
+  if(Math.random() > 0.7) {
+    empCount += Math.floor(Math.random()*3);
+    const el = document.getElementById('kpi-emp');
+    if(el) el.textContent = empCount.toLocaleString();
+  }
+}, 4000);
+</script>
+</body>
+</html>
